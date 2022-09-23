@@ -45,11 +45,11 @@ export const store = async (req, res) => {
         if(userByEmail){
             return res.json({
                 ok: true,
-                data: user
+                data: userByEmail
             })
         }
 
-        //body.profile_url = `https://avatars.dicebar.com/api/avataaars/${body.name}.svg`
+        
         body.profile_url = `https://avatars.dicebear.com/api/avataaars/${body.name}.svg`
     
         const user = await prisma.user.create({
@@ -58,8 +58,8 @@ export const store = async (req, res) => {
             },
         });
 
-        pusher.trigger("mychat", "my-list-contacts", {
-            message: "Call to update list contacs"
+        pusher.trigger("my-chat", "my-list-contacts", {
+            message: "Call to update list contacts"
         })
 
         res.status(201).json({
